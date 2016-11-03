@@ -6,6 +6,7 @@ import com.jetbrains.python.psi.types.PyClassMembersProviderBase;
 import com.jetbrains.python.psi.types.PyClassType;
 import com.jetbrains.python.psi.types.TypeEvalContext;
 import com.wishtack.pysynthetic.SyntheticTypeInfo;
+import com.wishtack.pysynthetic.SyntheticTypeInfoReader;
 
 import java.util.Collection;
 
@@ -15,7 +16,7 @@ import java.util.Collection;
 public class SyntheticMembersProvider extends PyClassMembersProviderBase {
     @Override
     public Collection<PyCustomMember> getMembers(PyClassType clazz, PsiElement location, TypeEvalContext typeEvalContext) {
-        SyntheticTypeInfo typeInfo = SyntheticTypeInfo.read(clazz.getPyClass());
+        SyntheticTypeInfo typeInfo = new SyntheticTypeInfoReader(clazz.getPyClass()).read();
 
         return typeInfo.getPyMembers();
     }
