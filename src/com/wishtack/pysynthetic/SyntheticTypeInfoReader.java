@@ -85,7 +85,7 @@ public class SyntheticTypeInfoReader {
 
         boolean readOnly = readReadOnlyValue(decorator, camelCase);
 
-        return new SyntheticPropertyMember(decorator, memberNameExpression.getStringValue(), readOnly);
+        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly);
     }
 
     private SyntheticMemberWithAccessors readMemberWithAccessors(PyDecorator decorator, boolean camelCase) {
@@ -117,7 +117,7 @@ public class SyntheticTypeInfoReader {
             }
         }
 
-        return new SyntheticMemberWithAccessors(decorator, memberName, getterName, setterName);
+        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName);
     }
 
     private static boolean readReadOnlyValue(PyDecorator decorator, boolean camelCase) {

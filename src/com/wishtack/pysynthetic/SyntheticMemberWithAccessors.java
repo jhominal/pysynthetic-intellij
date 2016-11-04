@@ -1,6 +1,8 @@
 package com.wishtack.pysynthetic;
 
+import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
+import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,8 +23,8 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
 
     private Collection<PyCustomMember> myPyMembers;
 
-    public SyntheticMemberWithAccessors(@NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, String setterName) {
-        super(definitionDecorator, name, setterName == null);
+    public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, String setterName) {
+        super(pyClass, definitionDecorator, name, setterName == null);
 
         myGetterName = getterName;
         mySetterName = setterName;
@@ -33,12 +35,24 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
     public Collection<PyCustomMember> getPyMembers() {
 
         if (myPyMembers == null) {
+            String pyClassName = getDefinitionClass().getQualifiedName();
+
             ArrayList<PyCustomMember> membersArray = new ArrayList<>(2);
 
-            membersArray.add(new PyCustomMember(myGetterName, getDefinitionDecorator()).asFunction());
+            PyCustomMember getterMember = new PyCustomMember(myGetterName, pyClassName, null);
+            getterMember.withIcon(PlatformIcons.METHOD_ICON);
+            getterMember.toPsiElement(getDefinitionDecorator());
+            getterMember.asFunction();
+
+            membersArray.add(getterMember);
 
             if (mySetterName != null) {
-                membersArray.add(new PyCustomMember(mySetterName, getDefinitionDecorator()).asFunction());
+                PyCustomMember setterMember = new PyCustomMember(mySetterName, pyClassName, null);
+                setterMember.withIcon(PlatformIcons.METHOD_ICON);
+                setterMember.toPsiElement(getDefinitionDecorator());
+                setterMember.asFunction();
+
+                membersArray.add(setterMember);
             }
 
             myPyMembers = Collections.unmodifiableList(membersArray);
