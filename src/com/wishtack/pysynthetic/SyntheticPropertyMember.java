@@ -6,7 +6,7 @@ import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -28,15 +28,15 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
         if (myPyMembers == null) {
             String pyClassName = getDefinitionClass().getQualifiedName();
 
-            ArrayList<PyCustomMember> membersArray = new ArrayList<>(1);
+            PyCustomMember[] membersArray = new PyCustomMember[1];
 
             PyCustomMember propertyMember = new PyCustomMember(getName(), pyClassName, null);
             propertyMember.withIcon(PlatformIcons.PROPERTY_ICON);
             propertyMember.toPsiElement(getDefinitionDecorator());
 
-            membersArray.add(propertyMember);
+            membersArray[0] = propertyMember;
 
-            myPyMembers = Collections.unmodifiableList(membersArray);
+            myPyMembers = Collections.unmodifiableList(Arrays.asList(membersArray));
         }
 
         return myPyMembers;

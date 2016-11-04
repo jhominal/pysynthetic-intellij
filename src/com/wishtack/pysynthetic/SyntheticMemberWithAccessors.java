@@ -7,7 +7,7 @@ import com.jetbrains.python.psi.PyDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -37,14 +37,14 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
         if (myPyMembers == null) {
             String pyClassName = getDefinitionClass().getQualifiedName();
 
-            ArrayList<PyCustomMember> membersArray = new ArrayList<>(2);
+            PyCustomMember[] membersArray = new PyCustomMember[mySetterName == null ? 1 : 2];
 
             PyCustomMember getterMember = new PyCustomMember(myGetterName, pyClassName, null);
             getterMember.withIcon(PlatformIcons.METHOD_ICON);
             getterMember.toPsiElement(getDefinitionDecorator());
             getterMember.asFunction();
 
-            membersArray.add(getterMember);
+            membersArray[0] = getterMember;
 
             if (mySetterName != null) {
                 PyCustomMember setterMember = new PyCustomMember(mySetterName, pyClassName, null);
@@ -52,10 +52,10 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
                 setterMember.toPsiElement(getDefinitionDecorator());
                 setterMember.asFunction();
 
-                membersArray.add(setterMember);
+                membersArray[1] = setterMember;
             }
 
-            myPyMembers = Collections.unmodifiableList(membersArray);
+            myPyMembers = Collections.unmodifiableList(Arrays.asList(membersArray));
         }
 
         return myPyMembers;
