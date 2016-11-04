@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.wishtack.pysynthetic.intellij</id>
   <name>PySynthetic</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <vendor email="" url="http://pysynthetic.readthedocs.io/">Wishtack</vendor>
 
   <description><![CDATA[
@@ -9,6 +9,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.2.0:
+      Provides type autocompletion for generated members and properties based on the specified contract. Only a very
+      limited set of contract expressions is currently supported.<br>
+      Also improves performance by caching synthetic members information.<br>
       0.1.0:
       Initial version - provides name autocompletion for members and properties.<br>
     ]]>
