@@ -1,6 +1,8 @@
 package com.wishtack.pysynthetic;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
 import com.jetbrains.python.psi.types.PyType;
@@ -14,7 +16,7 @@ import java.util.Collections;
 /**
  * Created by Jean Hominal on 2016-11-03.
  */
-public class SyntheticTypeInfoReader {
+public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTypeInfo> {
     private final static SyntheticTypeInfo emptyInfo = new SyntheticTypeInfo(Collections.emptyList(), false);
 
     @NotNull
@@ -26,12 +28,17 @@ public class SyntheticTypeInfoReader {
 
     @NotNull
     public SyntheticTypeInfo read() {
+        return CachedValuesManager.getCachedValue(myPyClass, this);
+    }
+
+    @NotNull
+    public CachedValueProvider.Result<SyntheticTypeInfo> compute() {
         PyClass pyClass = myPyClass;
 
         PyDecoratorList decoratorList = pyClass.getDecoratorList();
 
         if (decoratorList == null) {
-            return emptyInfo;
+            return cacheResult(emptyInfo);
         }
 
         ArrayList<SyntheticMemberInfo> syntheticMemberInfoList = new ArrayList<>();
@@ -76,11 +83,17 @@ public class SyntheticTypeInfoReader {
         }
 
         if (!withConstructor && syntheticMemberInfoList.isEmpty()) {
-            return emptyInfo;
+            return cacheResult(emptyInfo);
         }
 
-        return new SyntheticTypeInfo(Collections.unmodifiableList(syntheticMemberInfoList), withConstructor);
+        return cacheResult(new SyntheticTypeInfo(Collections.unmodifiableList(syntheticMemberInfoList), withConstructor));
+    }
 
+    @NotNull
+    private CachedValueProvider.Result<SyntheticTypeInfo> cacheResult(@NotNull SyntheticTypeInfo syntheticTypeInfo) {
+        // The dependency argument means that the cache value will be invalidated when the file
+        // containing myPyClass is changed.
+        return CachedValueProvider.Result.createSingleDependency(syntheticTypeInfo, myPyClass);
     }
 
     @Nullable
