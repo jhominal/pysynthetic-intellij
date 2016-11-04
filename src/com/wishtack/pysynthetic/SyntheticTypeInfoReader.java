@@ -1,8 +1,12 @@
 package com.wishtack.pysynthetic;
 
+import com.intellij.psi.PsiElement;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
+import com.jetbrains.python.psi.types.PyType;
+import com.jetbrains.python.psi.types.PyTypeParser;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,16 +83,20 @@ public class SyntheticTypeInfoReader {
 
     }
 
-    private SyntheticPropertyMember readProperty(PyDecorator decorator, boolean camelCase) {
+    @Nullable
+    private SyntheticPropertyMember readProperty(@NotNull PyDecorator decorator, boolean camelCase) {
         StringLiteralExpression memberNameExpression = decorator.getArgument(0, StringLiteralExpression.class);
         if (memberNameExpression == null) return null;
 
         boolean readOnly = readReadOnlyValue(decorator, camelCase);
 
-        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly);
+        PyType memberType = readMemberTypeFromContract(decorator);
+
+        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly, memberType);
     }
 
-    private SyntheticMemberWithAccessors readMemberWithAccessors(PyDecorator decorator, boolean camelCase) {
+    @Nullable
+    private SyntheticMemberWithAccessors readMemberWithAccessors(@NotNull PyDecorator decorator, boolean camelCase) {
         StringLiteralExpression memberNameExpression = decorator.getArgument(0, StringLiteralExpression.class);
         if (memberNameExpression == null) return null;
         String memberName = memberNameExpression.getStringValue();
@@ -117,7 +125,9 @@ public class SyntheticTypeInfoReader {
             }
         }
 
-        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName);
+        PyType memberType = readMemberTypeFromContract(decorator);
+
+        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName, memberType);
     }
 
     private static boolean readReadOnlyValue(PyDecorator decorator, boolean camelCase) {
@@ -128,6 +138,34 @@ public class SyntheticTypeInfoReader {
             result = "True".equals(readOnlyExpression.getName());
         }
         return result;
+    }
+
+    @Nullable
+    private PyType readMemberTypeFromContract(PyDecorator decorator) {
+        PyExpression contractExpression = decorator.getKeywordArgument("contract");
+
+        if (contractExpression instanceof PyReferenceExpression) {
+            PyReferenceExpression referenceExpression = (PyReferenceExpression)contractExpression;
+            PsiElement referencedElement = referenceExpression.getReference().resolve();
+
+            if (referencedElement instanceof PyClass) {
+                PyClass memberClass = (PyClass)referencedElement;
+                return PyPsiFacade.getInstance(myPyClass.getProject()).createClassType(memberClass, false);
+            }
+
+            return null;
+        }
+
+        if (contractExpression instanceof StringLiteralExpression) {
+            String contract = ((StringLiteralExpression)contractExpression).getStringValue();
+            String contractType = PyContractsSimpleParser.getSimpleNonTrivialTypeContractString(contract);
+
+            if (contractType != null) {
+                return PyTypeParser.getTypeByName(myPyClass, contractType);
+            }
+        }
+
+        return null;
     }
 
 }

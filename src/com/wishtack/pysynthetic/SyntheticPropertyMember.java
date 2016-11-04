@@ -1,10 +1,13 @@
 package com.wishtack.pysynthetic;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
+import com.jetbrains.python.psi.types.PyType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,8 +20,8 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
 
     private Collection<PyCustomMember> myPyMembers;
 
-    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly) {
-        super(pyClass, definitionDecorator, name, readOnly);
+    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType) {
+        super(pyClass, definitionDecorator, name, readOnly, memberType);
     }
 
     @NotNull
@@ -30,7 +33,7 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
 
             PyCustomMember[] membersArray = new PyCustomMember[1];
 
-            PyCustomMember propertyMember = new PyCustomMember(getName(), pyClassName, null);
+            PyCustomMember propertyMember = new PyCustomMember(getName(), pyClassName, this::getPropertyType);
             propertyMember.withIcon(PlatformIcons.PROPERTY_ICON);
             propertyMember.toPsiElement(getDefinitionDecorator());
 
@@ -40,6 +43,10 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
         }
 
         return myPyMembers;
+    }
+
+    private PyType getPropertyType(PsiElement context) {
+        return getMemberType();
     }
 
     @Override

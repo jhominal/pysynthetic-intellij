@@ -1,20 +1,25 @@
 package com.wishtack.pysynthetic;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
+import com.jetbrains.python.psi.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Jean Hominal on 2016-11-01
  */
 public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
+
+    private static final List<PyCallableParameter> emptyParameterList = Collections.emptyList();
 
     @NotNull
     private final String myGetterName;
@@ -23,8 +28,8 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
 
     private Collection<PyCustomMember> myPyMembers;
 
-    public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, String setterName) {
-        super(pyClass, definitionDecorator, name, setterName == null);
+    public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, @Nullable String setterName, @Nullable PyType memberType) {
+        super(pyClass, definitionDecorator, name, setterName == null, memberType);
 
         myGetterName = getterName;
         mySetterName = setterName;
@@ -39,7 +44,7 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
 
             PyCustomMember[] membersArray = new PyCustomMember[mySetterName == null ? 1 : 2];
 
-            PyCustomMember getterMember = new PyCustomMember(myGetterName, pyClassName, null);
+            PyCustomMember getterMember = new PyCustomMember(myGetterName, pyClassName, this::getGetterType);
             getterMember.withIcon(PlatformIcons.METHOD_ICON);
             getterMember.toPsiElement(getDefinitionDecorator());
             getterMember.asFunction();
@@ -47,7 +52,7 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
             membersArray[0] = getterMember;
 
             if (mySetterName != null) {
-                PyCustomMember setterMember = new PyCustomMember(mySetterName, pyClassName, null);
+                PyCustomMember setterMember = new PyCustomMember(mySetterName, pyClassName, this::getSetterType);
                 setterMember.withIcon(PlatformIcons.METHOD_ICON);
                 setterMember.toPsiElement(getDefinitionDecorator());
                 setterMember.asFunction();
@@ -59,6 +64,35 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
         }
 
         return myPyMembers;
+    }
+
+    private PyCallableTypeImpl myGetterType;
+
+    private PyType getGetterType(PsiElement context) {
+
+        if (myGetterType == null) {
+            myGetterType = new PyCallableTypeImpl(emptyParameterList, getMemberType());
+        }
+
+        return myGetterType;
+    }
+
+    private PyCallableTypeImpl mySetterType;
+
+    private PyType getSetterType(PsiElement context) {
+        if (mySetterType == null) {
+
+            PyCallableParameter[] setterParameters = new PyCallableParameter[1];
+
+            setterParameters[0] = new PyCallableParameterImpl("value", getMemberType());
+
+            List<PyCallableParameter> setterParametersList =
+                    Collections.unmodifiableList(Arrays.asList(setterParameters));
+
+            mySetterType = new PyCallableTypeImpl(setterParametersList, null);
+        }
+
+        return mySetterType;
     }
 
     @Override
