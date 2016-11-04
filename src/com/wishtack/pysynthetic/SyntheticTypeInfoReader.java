@@ -33,9 +33,7 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
     @NotNull
     public CachedValueProvider.Result<SyntheticTypeInfo> compute() {
-        PyClass pyClass = myPyClass;
-
-        PyDecoratorList decoratorList = pyClass.getDecoratorList();
+        PyDecoratorList decoratorList = myPyClass.getDecoratorList();
 
         if (decoratorList == null) {
             return cacheResult(emptyInfo);
