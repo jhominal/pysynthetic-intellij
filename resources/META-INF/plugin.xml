@@ -31,6 +31,11 @@
     <pyClassMembersProvider implementation="com.wishtack.pysynthetic.impl.SyntheticMembersProvider" />
   </extensions>
 
+  <extensions defaultExtensionNs="com.intellij">
+    <completion.contributor language="Python"
+                            implementationClass="com.wishtack.pysynthetic.impl.SyntheticConstructorArgumentsCompletionContributor" />
+  </extensions>
+
   <actions>
     <!-- Add your actions here -->
   </actions>
