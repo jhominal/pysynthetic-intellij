@@ -14,20 +14,20 @@ public final class SyntheticTypeInfo {
 
     @NotNull
     private final Collection<SyntheticMemberInfo> myMembers;
-    private final boolean myWithConstructor;
+    private final boolean mySyntheticConstructor;
     private Collection<PyCustomMember> myPyMembers;
 
-    SyntheticTypeInfo(@NotNull Collection<SyntheticMemberInfo> members, boolean withConstructor) {
+    SyntheticTypeInfo(@NotNull Collection<SyntheticMemberInfo> members, boolean syntheticConstructor) {
         myMembers = members;
-        myWithConstructor = withConstructor;
+        mySyntheticConstructor = syntheticConstructor;
     }
 
     public Collection<SyntheticMemberInfo> getMembers() {
         return myMembers;
     }
 
-    public boolean withConstructor() {
-        return myWithConstructor;
+    public boolean hasSyntheticConstructor() {
+        return mySyntheticConstructor;
     }
 
     @NotNull
