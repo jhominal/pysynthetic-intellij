@@ -89,7 +89,7 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
             List<PyCallableParameter> setterParametersList =
                     Collections.unmodifiableList(Arrays.asList(setterParameters));
 
-            mySetterType = new PyCallableTypeImpl(setterParametersList, null);
+            mySetterType = new PyCallableTypeImpl(setterParametersList, PyNoneType.INSTANCE);
         }
 
         return mySetterType;
