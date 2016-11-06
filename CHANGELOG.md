@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
  * Enhanced performance due to caching of synthetic type information.
+ * Icons added to generated members' autocompletion.
 
 ## 0.1.0 - 2016-11-02
 
