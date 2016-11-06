@@ -23,12 +23,17 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
 import static com.intellij.patterns.StandardPatterns.or;
 
 /**
- * Created by jean on 2016-11-05.
+ * Created by Jean Hominal on 2016-11-05.
  *
  * This class was created by taking inspiration from the Python IntelliJ plugin
  * com.jetbrains.python.codeInsight.completion.PyStringFormatCompletionContributor
+ *
+ * This class is now only used for cases where __init__ is not declared on the class
+ * with the synthetic constructor decorator - when __init__ is declared,
+ * SyntheticTypeProvider.getCallableType is called by the IDE, which provides all
+ * useful assistance.
  */
-public class SyntheticConstructorArgsCompletionContributor extends CompletionContributor {
+public class SyntheticInitArgsCompletionContributor extends CompletionContributor {
 
     private static final Key<SyntheticTypeInfo> SYNTHETIC_TYPE_INFO_KEY = new Key<>("SyntheticTypeInfoKey");
 
@@ -40,11 +45,15 @@ public class SyntheticConstructorArgsCompletionContributor extends CompletionCon
                     if (!(referencedElement instanceof PyClass)) {
                         return false;
                     }
-                    SyntheticTypeInfo sti = new SyntheticTypeInfoReader((PyClass)referencedElement).read();
-                    // Need to put the SyntheticTypeInfo inside the ProcessingContext,
-                    // because reference.resolve() cannot be done in addCompletions.
-                    context.put(SYNTHETIC_TYPE_INFO_KEY, sti);
-                    return sti.hasSyntheticConstructor();
+                    PyClass pyClass = (PyClass)referencedElement;
+                    SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
+                    if (sti.hasSyntheticConstructor() && pyClass.findInitOrNew(false, null) == null) {
+                        // Need to put the SyntheticTypeInfo inside the ProcessingContext,
+                        // because reference.resolve() cannot be done in addCompletions.
+                        context.put(SYNTHETIC_TYPE_INFO_KEY, sti);
+                        return true;
+                    }
+                    return false;
                 }
             };
 
@@ -64,7 +73,7 @@ public class SyntheticConstructorArgsCompletionContributor extends CompletionCon
                             .withChild(psiElement(PyReferenceExpression.class).with(SYNTHETIC_CTOR_CALL_PATTERN_CONDITION)));
 
 
-    public SyntheticConstructorArgsCompletionContributor() {
+    public SyntheticInitArgsCompletionContributor() {
         extend(
             CompletionType.BASIC,
             or(

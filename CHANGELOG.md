@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## Unreleased
+
+### Added
+
+ * Support for synthetic initializers:
+   * Full Parameter information in the IDE is supported if the `__init__` method is re-declared.
+   * Otherwise, support is limited to argument name completion.
+
 ## 0.2.0 - 2016-11-05
 
 ### Added

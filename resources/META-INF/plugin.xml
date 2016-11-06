@@ -10,6 +10,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      Unreleased:
+      Synthetic Initializer support.<br>
       0.2.0:
       Type-based auto-completion for generated members and properties based on the specified contract. Only a very
       limited set of contract expressions is currently supported.<br>
@@ -30,11 +32,12 @@
   <extensions defaultExtensionNs="Pythonid">
     <!-- Add your extensions here -->
     <pyClassMembersProvider implementation="com.wishtack.pysynthetic.impl.SyntheticMembersProvider" />
+    <typeProvider implementation="com.wishtack.pysynthetic.impl.SyntheticTypeProvider" />
   </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="Python"
-                            implementationClass="com.wishtack.pysynthetic.impl.SyntheticConstructorArgsCompletionContributor" />
+                            implementationClass="com.wishtack.pysynthetic.impl.SyntheticInitArgsCompletionContributor" />
   </extensions>
 
   <actions>

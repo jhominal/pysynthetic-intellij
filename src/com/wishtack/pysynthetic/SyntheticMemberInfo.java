@@ -33,7 +33,7 @@ public abstract class SyntheticMemberInfo {
 
     protected PyClass getDefinitionClass() { return myClass; }
 
-    protected PyDecorator getDefinitionDecorator() {
+    public PyDecorator getDefinitionDecorator() {
         return myDefinitionDecorator;
     }
 
@@ -46,7 +46,8 @@ public abstract class SyntheticMemberInfo {
         return myReadOnly;
     }
 
-    protected PyType getMemberType() {
+    @Nullable
+    public PyType getMemberType() {
         return myMemberType;
     }
 
