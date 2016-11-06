@@ -1,26 +1,23 @@
 package com.wishtack.pysynthetic;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
-import com.jetbrains.python.psi.types.*;
+import com.jetbrains.python.psi.types.PyType;
+import com.wishtack.pysynthetic.psi.SyntheticGetterCallable;
+import com.wishtack.pysynthetic.psi.SyntheticSetterCallable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by Jean Hominal on 2016-11-01
  */
 public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
-
-    private static final List<PyCallableParameter> emptyParameterList = Collections.emptyList();
 
     @NotNull
     private final String myGetterName;
@@ -37,25 +34,31 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
     }
 
     @NotNull
+    public String getGetterName() {
+        return myGetterName;
+    }
+
+    @Nullable
+    public String getSetterName() {
+        return mySetterName;
+    }
+
+    @NotNull
     @Override
     public Collection<PyCustomMember> getPyMembers() {
 
         if (myPyMembers == null) {
-            String pyClassName = getDefinitionClass().getQualifiedName();
+            String pyClassName = getDefinitionClass().getName();
 
             PyCustomMember[] membersArray = new PyCustomMember[mySetterName == null ? 1 : 2];
 
-            PyCustomMember getterMember = new PyCustomMember(myGetterName, pyClassName, this::getGetterType);
-            getterMember.withIcon(PlatformIcons.METHOD_ICON);
-            getterMember.toPsiElement(getDefinitionDecorator());
+            PyCustomMember getterMember = new PyCustomMember(myGetterName, new SyntheticGetterCallable(this), pyClassName);
             getterMember.asFunction();
 
             membersArray[0] = getterMember;
 
             if (mySetterName != null) {
-                PyCustomMember setterMember = new PyCustomMember(mySetterName, pyClassName, this::getSetterType);
-                setterMember.withIcon(PlatformIcons.METHOD_ICON);
-                setterMember.toPsiElement(getDefinitionDecorator());
+                PyCustomMember setterMember = new PyCustomMember(mySetterName, new SyntheticSetterCallable(this), pyClassName);
                 setterMember.asFunction();
 
                 membersArray[1] = setterMember;
@@ -65,35 +68,6 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
         }
 
         return myPyMembers;
-    }
-
-    private PyCallableTypeImpl myGetterType;
-
-    private PyType getGetterType(PsiElement context) {
-
-        if (myGetterType == null) {
-            myGetterType = new PyCallableTypeImpl(emptyParameterList, getMemberType());
-        }
-
-        return myGetterType;
-    }
-
-    private PyCallableTypeImpl mySetterType;
-
-    private PyType getSetterType(PsiElement context) {
-        if (mySetterType == null) {
-
-            PyCallableParameter[] setterParameters = new PyCallableParameter[1];
-
-            setterParameters[0] = new PyCallableParameterImpl("value", getMemberType());
-
-            List<PyCallableParameter> setterParametersList =
-                    Collections.unmodifiableList(Arrays.asList(setterParameters));
-
-            mySetterType = new PyCallableTypeImpl(setterParametersList, PyNoneType.INSTANCE);
-        }
-
-        return mySetterType;
     }
 
     @Override

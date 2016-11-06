@@ -35,7 +35,7 @@ public abstract class SyntheticMemberInfo {
         myDefaultValue = defaultValue;
     }
 
-    protected PyClass getDefinitionClass() { return myClass; }
+    public PyClass getDefinitionClass() { return myClass; }
 
     public PyDecorator getDefinitionDecorator() {
         return myDefinitionDecorator;
