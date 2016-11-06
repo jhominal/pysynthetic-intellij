@@ -1,12 +1,12 @@
 package com.wishtack.pysynthetic;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
 import com.jetbrains.python.psi.types.PyType;
+import icons.PythonIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +35,7 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
             PyCustomMember[] membersArray = new PyCustomMember[1];
 
             PyCustomMember propertyMember = new PyCustomMember(getName(), pyClassName, this::getPropertyType);
-            propertyMember.withIcon(PlatformIcons.PROPERTY_ICON);
+            propertyMember.withIcon(isReadOnly() ? PythonIcons.Python.PropertyGetter : PythonIcons.Python.PropertySetter);
             propertyMember.toPsiElement(getDefinitionDecorator());
 
             membersArray[0] = propertyMember;
