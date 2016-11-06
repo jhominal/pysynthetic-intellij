@@ -43,7 +43,8 @@ public class SyntheticInitParameter extends PyNamedParameterImpl {
     @Nullable
     @Override
     public PyExpression getDefaultValue() {
-        return NONE_MINIMAL_EXPRESSION;
+        PyExpression defaultValue = myMemberInfo.getDefaultValue();
+        return defaultValue != null ? defaultValue : NONE_MINIMAL_EXPRESSION;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
+import com.jetbrains.python.psi.PyExpression;
 import com.jetbrains.python.psi.types.PyType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,8 +21,8 @@ public final class SyntheticPropertyMember extends SyntheticMemberInfo {
 
     private Collection<PyCustomMember> myPyMembers;
 
-    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType) {
-        super(pyClass, definitionDecorator, name, readOnly, memberType);
+    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
+        super(pyClass, definitionDecorator, name, readOnly, memberType, defaultValue);
     }
 
     @NotNull

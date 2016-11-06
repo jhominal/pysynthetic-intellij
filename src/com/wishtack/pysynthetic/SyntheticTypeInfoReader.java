@@ -103,7 +103,9 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
         PyType memberType = readMemberTypeFromContract(decorator);
 
-        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly, memberType);
+        PyExpression defaultValue = readDefault(decorator);
+
+        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly, memberType, defaultValue);
     }
 
     @Nullable
@@ -138,7 +140,9 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
         PyType memberType = readMemberTypeFromContract(decorator);
 
-        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName, memberType);
+        PyExpression defaultValue = readDefault(decorator);
+
+        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName, memberType, defaultValue);
     }
 
     private static boolean readReadOnlyValue(PyDecorator decorator, boolean camelCase) {
@@ -177,6 +181,12 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
         }
 
         return null;
+    }
+
+    @Nullable
+    private PyExpression readDefault(PyDecorator decorator) {
+        PyExpression defaultExpression = decorator.getKeywordArgument("default");
+        return defaultExpression;
     }
 
 }
