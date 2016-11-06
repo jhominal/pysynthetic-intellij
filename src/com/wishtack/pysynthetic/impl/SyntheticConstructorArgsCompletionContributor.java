@@ -28,7 +28,7 @@ import static com.intellij.patterns.StandardPatterns.or;
  * This class was created by taking inspiration from the Python IntelliJ plugin
  * com.jetbrains.python.codeInsight.completion.PyStringFormatCompletionContributor
  */
-public class SyntheticConstructorArgumentsCompletionContributor extends CompletionContributor {
+public class SyntheticConstructorArgsCompletionContributor extends CompletionContributor {
 
     private static final Key<SyntheticTypeInfo> SYNTHETIC_TYPE_INFO_KEY = new Key<>("SyntheticTypeInfoKey");
 
@@ -64,7 +64,7 @@ public class SyntheticConstructorArgumentsCompletionContributor extends Completi
                             .withChild(psiElement(PyReferenceExpression.class).with(SYNTHETIC_CTOR_CALL_PATTERN_CONDITION)));
 
 
-    public SyntheticConstructorArgumentsCompletionContributor() {
+    public SyntheticConstructorArgsCompletionContributor() {
         extend(
             CompletionType.BASIC,
             or(
@@ -73,7 +73,6 @@ public class SyntheticConstructorArgumentsCompletionContributor extends Completi
             ),
             new SyntheticConstructorArgumentsCompletionProvider()
         );
-
     }
 
     private static class SyntheticConstructorArgumentsCompletionProvider extends CompletionProvider<CompletionParameters> {
