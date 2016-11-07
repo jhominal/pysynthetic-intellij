@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## 0.3.1
+
+### Changed
+
+ * Synthetic constructor parameter order fixes:
+   * Fixed incorrect duplicate parameters when some synthetic members define arguments with matching names.
+   * Fixed incorrect ordering of parameters when `**kwargs` are present.
+ * Tweaked auto-completion of getters/setters to be closer to native method auto-completion.
+
 ## 0.3.0
 
 ### Added
