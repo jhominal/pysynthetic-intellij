@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.wishtack.pysynthetic.intellij</id>
   <name>PySynthetic</name>
-  <version>0.2.0</version>
+  <version>0.3.0</version>
   <vendor email="" url="https://www.wishtack.com/">Wishtack</vendor>
 
   <description><![CDATA[
@@ -10,7 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      Unreleased:
+      0.3.0:
       Synthetic Initializer support.<br>
       0.2.0:
       Type-based auto-completion for generated members and properties based on the specified contract. Only a very
