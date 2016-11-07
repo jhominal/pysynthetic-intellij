@@ -1,53 +1,42 @@
 package com.wishtack.pysynthetic;
 
+import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.psi.PsiElement;
-import com.jetbrains.python.codeInsight.PyCustomMember;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
 import com.jetbrains.python.psi.types.PyType;
+import com.wishtack.pysynthetic.psi.SyntheticPropertyElement;
 import icons.PythonIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by Jean Hominal on 2016-11-01
  */
 public final class SyntheticPropertyMember extends SyntheticMemberInfo {
 
-    private Collection<PyCustomMember> myPyMembers;
-
     public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
         super(pyClass, definitionDecorator, name, readOnly, memberType, defaultValue);
     }
 
-    @NotNull
     @Override
-    public Collection<PyCustomMember> getPyMembers() {
-
-        if (myPyMembers == null) {
-            String pyClassName = getDefinitionClass().getQualifiedName();
-
-            PyCustomMember[] membersArray = new PyCustomMember[1];
-
-            PyCustomMember propertyMember = new PyCustomMember(getName(), pyClassName, this::getPropertyType);
-            propertyMember.withIcon(isReadOnly() ? PythonIcons.Python.PropertyGetter : PythonIcons.Python.PropertySetter);
-            propertyMember.toPsiElement(getDefinitionDecorator());
-
-            membersArray[0] = propertyMember;
-
-            myPyMembers = Collections.unmodifiableList(Arrays.asList(membersArray));
-        }
-
-        return myPyMembers;
+    void fillLookupElementsList(@NotNull List<LookupElement> list) {
+        LookupElement propertyLookupElement =
+                LookupElementBuilder.create(getName())
+                        .withTypeText(getDefinitionClass().getName())
+                        .withIcon(isReadOnly() ? PythonIcons.Python.PropertyGetter : PythonIcons.Python.PropertySetter);
+        list.add(propertyLookupElement);
     }
 
-    private PyType getPropertyType(PsiElement context) {
-        return getMemberType();
+    @Override
+    void fillPsiElementMap(@NotNull Map<String, PsiElement> map) {
+        map.putIfAbsent(getName(), new SyntheticPropertyElement(this));
     }
 
     @Override

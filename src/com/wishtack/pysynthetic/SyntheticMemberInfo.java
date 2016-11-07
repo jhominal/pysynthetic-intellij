@@ -1,6 +1,7 @@
 package com.wishtack.pysynthetic;
 
-import com.jetbrains.python.codeInsight.PyCustomMember;
+import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.psi.PsiElement;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
@@ -8,7 +9,8 @@ import com.jetbrains.python.psi.types.PyType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jean Hominal on 2016-11-01.
@@ -60,6 +62,7 @@ public abstract class SyntheticMemberInfo {
         return myDefaultValue;
     }
 
-    @NotNull
-    public abstract Collection<PyCustomMember> getPyMembers();
+    abstract void fillLookupElementsList(@NotNull List<LookupElement> list);
+
+    abstract void fillPsiElementMap(@NotNull Map<String, PsiElement> map);
 }

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * Created by Jean Hominal on 2016-11-06.
  */
 public class VirtualParameter extends PyNamedParameterImpl {
-    @NotNull
+
     private final PyType myParameterType;
     private final boolean mySelf;
 

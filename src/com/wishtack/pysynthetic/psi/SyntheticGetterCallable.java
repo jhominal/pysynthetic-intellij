@@ -2,7 +2,6 @@ package com.wishtack.pysynthetic.psi;
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.psi.stubs.IStubElementType;
-import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.PyElementTypes;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.stubs.PyParameterListStub;
@@ -12,7 +11,6 @@ import com.wishtack.pysynthetic.SyntheticMemberWithAccessors;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.Icon;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -152,11 +150,5 @@ public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyC
                 .collect(Collectors.toList());
 
         return new PyCallableTypeImpl(parameterList, myMemberInfo.getMemberType());
-    }
-
-    @Nullable
-    @Override
-    public Icon getIcon(int flags) {
-        return PlatformIcons.METHOD_ICON;
     }
 }

@@ -1,6 +1,10 @@
 package com.wishtack.pysynthetic;
 
-import com.jetbrains.python.codeInsight.PyCustomMember;
+import com.intellij.codeInsight.completion.util.ParenthesesInsertHandler;
+import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.psi.PsiElement;
+import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
@@ -10,9 +14,9 @@ import com.wishtack.pysynthetic.psi.SyntheticSetterCallable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by Jean Hominal on 2016-11-01
@@ -23,8 +27,6 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
     private final String myGetterName;
     @Nullable
     private final String mySetterName;
-
-    private Collection<PyCustomMember> myPyMembers;
 
     public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, @Nullable String setterName, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
         super(pyClass, definitionDecorator, name, setterName == null, memberType, defaultValue);
@@ -43,31 +45,33 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
         return mySetterName;
     }
 
-    @NotNull
     @Override
-    public Collection<PyCustomMember> getPyMembers() {
+    void fillLookupElementsList(@NotNull List<LookupElement> list) {
+        LookupElement getterLookupElement =
+                LookupElementBuilder.create(getGetterName())
+                        .withTypeText(getDefinitionClass().getName())
+                        .withTailText("(self)")
+                        .withInsertHandler(ParenthesesInsertHandler.NO_PARAMETERS)
+                        .withIcon(PlatformIcons.METHOD_ICON);
+        list.add(getterLookupElement);
 
-        if (myPyMembers == null) {
-            String pyClassName = getDefinitionClass().getName();
-
-            PyCustomMember[] membersArray = new PyCustomMember[mySetterName == null ? 1 : 2];
-
-            PyCustomMember getterMember = new PyCustomMember(myGetterName, new SyntheticGetterCallable(this), pyClassName);
-            getterMember.asFunction();
-
-            membersArray[0] = getterMember;
-
-            if (mySetterName != null) {
-                PyCustomMember setterMember = new PyCustomMember(mySetterName, new SyntheticSetterCallable(this), pyClassName);
-                setterMember.asFunction();
-
-                membersArray[1] = setterMember;
-            }
-
-            myPyMembers = Collections.unmodifiableList(Arrays.asList(membersArray));
+        if (getSetterName() != null) {
+            LookupElement setterLookupElement =
+                    LookupElementBuilder.create(getSetterName())
+                            .withTypeText(getDefinitionClass().getName())
+                            .withTailText("(self, value)")
+                            .withInsertHandler(ParenthesesInsertHandler.WITH_PARAMETERS)
+                            .withIcon(PlatformIcons.METHOD_ICON);
+            list.add(setterLookupElement);
         }
+    }
 
-        return myPyMembers;
+    @Override
+    void fillPsiElementMap(@NotNull Map<String, PsiElement> map) {
+        map.putIfAbsent(getGetterName(), new SyntheticGetterCallable(this));
+        if (getSetterName() != null) {
+            map.putIfAbsent(getSetterName(), new SyntheticSetterCallable(this));
+        }
     }
 
     @Override
