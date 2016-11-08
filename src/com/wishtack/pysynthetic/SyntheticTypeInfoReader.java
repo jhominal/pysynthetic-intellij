@@ -185,8 +185,7 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
     @Nullable
     private PyExpression readDefault(PyDecorator decorator) {
-        PyExpression defaultExpression = decorator.getKeywordArgument("default");
-        return defaultExpression;
+        return decorator.getKeywordArgument("default");
     }
 
 }

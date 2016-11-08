@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 /**
  * Created by Jean Hominal on 2016-11-06.
  */
-public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyCallable, PyPossibleClassMember {
+public class SyntheticGetterCallable extends AbstractAccessor {
+
     @NotNull
     private final SyntheticMemberWithAccessors myMemberInfo;
 
@@ -32,7 +33,7 @@ public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyC
         myParameterList = new ParameterList(memberInfo);
     }
 
-    private static final class ParameterList extends ASTWrapperPsiElement implements PyParameterList {
+    private final class ParameterList extends ASTWrapperPsiElement implements PyParameterList {
 
         @NotNull
         private final PyParameter[] myParameters;
@@ -81,7 +82,7 @@ public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyC
         @Nullable
         @Override
         public PyFunction getContainingFunction() {
-            return null;
+            return SyntheticGetterCallable.this;
         }
 
         @Override
@@ -121,12 +122,6 @@ public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyC
 
     @Nullable
     @Override
-    public PyFunction asMethod() {
-        return null;
-    }
-
-    @Nullable
-    @Override
     public PyClass getContainingClass() {
         return myMemberInfo.getDefinitionClass();
     }
@@ -139,7 +134,7 @@ public class SyntheticGetterCallable extends ASTWrapperPsiElement implements PyC
     @Nullable
     @Override
     public String getQualifiedName() {
-        return myMemberInfo.getDefinitionClass() + "." + myMemberInfo.getGetterName();
+        return myMemberInfo.getDefinitionClass().getQualifiedName() + "." + myMemberInfo.getGetterName();
     }
 
     @Nullable
