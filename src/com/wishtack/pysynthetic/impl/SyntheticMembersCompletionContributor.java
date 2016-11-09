@@ -6,15 +6,19 @@ import com.intellij.patterns.PatternCondition;
 import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.ProcessingContext;
+import com.intellij.util.SmartList;
 import com.jetbrains.python.PyTokenTypes;
-import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyTypedElement;
 import com.jetbrains.python.psi.types.PyClassType;
 import com.jetbrains.python.psi.types.PyType;
+import com.jetbrains.python.psi.types.PyUnionType;
 import com.jetbrains.python.psi.types.TypeEvalContext;
 import com.wishtack.pysynthetic.SyntheticTypeInfo;
 import com.wishtack.pysynthetic.SyntheticTypeInfoReader;
+import com.wishtack.pysynthetic.psi.ClassWithSyntheticMembersType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
 
@@ -23,7 +27,7 @@ import static com.intellij.patterns.PlatformPatterns.psiElement;
  */
 public class SyntheticMembersCompletionContributor extends CompletionContributor {
 
-    private static final Key<SyntheticTypeInfo> SYNTHETIC_TYPE_INFO_KEY = new Key<>("SyntheticTypeInfoKey");
+    private static final Key<List<SyntheticTypeInfo>> SYNTHETIC_TYPE_INFO_KEY = new Key<>("SyntheticTypeInfoKey");
 
     private static final PatternCondition<PsiElement> PREVIOUS_SIBLING_HAS_SYNTHETIC_MEMBERS_PATTERN_CONDITION =
             new PatternCondition<PsiElement>("previousHasSyntheticMembers") {
@@ -38,19 +42,33 @@ public class SyntheticMembersCompletionContributor extends CompletionContributor
                     TypeEvalContext typeEval = TypeEvalContext.codeCompletion(element.getProject(), element.getContainingFile());
                     PyType type = typeEval.getType((PyTypedElement)previous);
 
-                    if (!(type instanceof PyClassType)) {
+                    SmartList<SyntheticTypeInfo> nonTrivialSyntheticTypeInfo = new SmartList<>();
+
+                    if (type instanceof PyClassType && !(type instanceof ClassWithSyntheticMembersType)) {
+                        SyntheticTypeInfo sti = new SyntheticTypeInfoReader(((PyClassType)type).getPyClass()).read();
+                        if (!sti.getMembers().isEmpty()) {
+                            nonTrivialSyntheticTypeInfo.add(sti);
+                        }
+                    } else if (type instanceof PyUnionType) {
+                        for (PyType typePossibility : ((PyUnionType)type).getMembers()) {
+                            if (typePossibility instanceof PyClassType && !(typePossibility instanceof ClassWithSyntheticMembersType)) {
+                                SyntheticTypeInfo sti = new SyntheticTypeInfoReader(((PyClassType)typePossibility).getPyClass()).read();
+                                if (!sti.getMembers().isEmpty()) {
+                                    nonTrivialSyntheticTypeInfo.add(sti);
+                                }
+                            }
+                        }
+                    }
+
+                    if (nonTrivialSyntheticTypeInfo.isEmpty()) {
                         return false;
                     }
-                    PyClass pyClass = ((PyClassType)type).getPyClass();
-                    SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
-                    if (!sti.getMembers().isEmpty()) {
-                        // Need to put the SyntheticTypeInfo inside the ProcessingContext,
-                        // because reference.resolve() cannot be done in addCompletions,
-                        // and SyntheticTypeInfo cannot be computed without resolving.
-                        context.put(SYNTHETIC_TYPE_INFO_KEY, sti);
-                        return true;
-                    }
-                    return false;
+
+                    // Need to put the SyntheticTypeInfo inside the ProcessingContext,
+                    // because reference.resolve() cannot be done in addCompletions,
+                    // and SyntheticTypeInfo cannot be computed without resolving.
+                    context.put(SYNTHETIC_TYPE_INFO_KEY, nonTrivialSyntheticTypeInfo);
+                    return true;
                 }
             };
 
@@ -77,8 +95,11 @@ public class SyntheticMembersCompletionContributor extends CompletionContributor
         protected void addCompletions(@NotNull CompletionParameters parameters,
                                       ProcessingContext context,
                                       @NotNull CompletionResultSet result) {
-            SyntheticTypeInfo typeInfo = context.get(SYNTHETIC_TYPE_INFO_KEY);
-            result.addAllElements(typeInfo.getLookupElements());
+            List<SyntheticTypeInfo> typeInfoList = context.get(SYNTHETIC_TYPE_INFO_KEY);
+
+            for (SyntheticTypeInfo typeInfo : typeInfoList) {
+                result.addAllElements(typeInfo.getLookupElements());
+            }
         }
     }
 }
