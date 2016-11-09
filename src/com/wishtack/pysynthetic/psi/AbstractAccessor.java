@@ -6,6 +6,7 @@ import com.intellij.psi.PsiComment;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.PyElementTypes;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.stubs.PyFunctionStub;
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.Icon;
 import java.util.Collections;
 import java.util.List;
 
@@ -151,4 +153,9 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
         return null;
     }
 
+    @Nullable
+    @Override
+    public final Icon getIcon(int flags) {
+        return PlatformIcons.METHOD_ICON;
+    }
 }

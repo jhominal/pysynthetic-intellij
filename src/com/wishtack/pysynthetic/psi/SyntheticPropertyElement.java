@@ -7,8 +7,11 @@ import com.jetbrains.python.psi.PyTypedElement;
 import com.jetbrains.python.psi.types.PyType;
 import com.jetbrains.python.psi.types.TypeEvalContext;
 import com.wishtack.pysynthetic.SyntheticPropertyMember;
+import icons.PythonIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.swing.Icon;
 
 /**
  * Created by Jean Hominal on 2016-11-07.
@@ -33,5 +36,11 @@ public class SyntheticPropertyElement extends ASTWrapperPsiElement implements Py
     @Override
     public PyType getType(@NotNull TypeEvalContext typeEvalContext, @NotNull TypeEvalContext.Key key) {
         return myPropertyMember.getMemberType();
+    }
+
+    @Nullable
+    @Override
+    public Icon getIcon(int flags) {
+        return myPropertyMember.isReadOnly() ? PythonIcons.Python.PropertyGetter : PythonIcons.Python.PropertySetter;
     }
 }

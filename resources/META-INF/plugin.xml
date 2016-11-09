@@ -40,8 +40,8 @@
   <extensions defaultExtensionNs="com.intellij">
     <completion.contributor language="Python"
                             implementationClass="com.wishtack.pysynthetic.impl.SyntheticInitArgsCompletionContributor" />
-    <completion.contributor language="Python"
-                            implementationClass="com.wishtack.pysynthetic.impl.SyntheticMembersCompletionContributor" />
+    <!--<completion.contributor language="Python"-->
+                            <!--implementationClass="com.wishtack.pysynthetic.impl.SyntheticMembersCompletionContributor" />-->
   </extensions>
 
   <actions>

@@ -81,35 +81,35 @@ public class SyntheticTypeProvider extends PyTypeProviderBase {
     @Override
     public PyType getCallType(@NotNull PyFunction function, @Nullable PyCallSiteExpression callSite, @NotNull TypeEvalContext context) {
 
-        if (callSite instanceof PyCallExpression) {
-            PyCallExpression call = (PyCallExpression)callSite;
-            PyExpression callee = call.getCallee();
-            if (callee != null) {
-                PyType calleeType = context.getType(callee);
-                if (calleeType instanceof PyClassType) {
-                    PyClassType pyClassType = (PyClassType)calleeType;
-                    if (pyClassType.isDefinition()) {
-                        PyClass pyClass = pyClassType.getPyClass();
-                        if (function.equals(pyClass.findInitOrNew(true, context))) {
-                            SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
-                            if (!sti.getMembers().isEmpty()) {
-                                return new ClassWithSyntheticMembersType(sti, pyClass, false);
-                            }
-                        }
-                    }
-                }
-            }
-            if (callee instanceof PyReferenceExpression) {
-                PsiElement resolvedCallee = ((PyReferenceExpression)callee).getReference().resolve();
-                if (resolvedCallee instanceof PyClass) {
-                    PyClass pyClass = (PyClass)resolvedCallee;
-                    SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
-                    if (!sti.getMembers().isEmpty()) {
-                        return new ClassWithSyntheticMembersType(sti, pyClass, false);
-                    }
-                }
-            }
-        }
+//        if (callSite instanceof PyCallExpression) {
+//            PyCallExpression call = (PyCallExpression)callSite;
+//            PyExpression callee = call.getCallee();
+//            if (callee != null) {
+//                PyType calleeType = context.getType(callee);
+//                if (calleeType instanceof PyClassType) {
+//                    PyClassType pyClassType = (PyClassType)calleeType;
+//                    if (pyClassType.isDefinition()) {
+//                        PyClass pyClass = pyClassType.getPyClass();
+//                        if (function.equals(pyClass.findInitOrNew(true, context))) {
+//                            SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
+//                            if (!sti.getMembers().isEmpty()) {
+//                                return new ClassWithSyntheticMembersType(sti, pyClass, false);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if (callee instanceof PyReferenceExpression) {
+//                PsiElement resolvedCallee = ((PyReferenceExpression)callee).getReference().resolve();
+//                if (resolvedCallee instanceof PyClass) {
+//                    PyClass pyClass = (PyClass)resolvedCallee;
+//                    SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
+//                    if (!sti.getMembers().isEmpty()) {
+//                        return new ClassWithSyntheticMembersType(sti, pyClass, false);
+//                    }
+//                }
+//            }
+//        }
 
         return super.getCallType(function, callSite, context);
     }
@@ -117,16 +117,16 @@ public class SyntheticTypeProvider extends PyTypeProviderBase {
     @Override
     public PyType getReferenceType(@NotNull PsiElement referenceTarget, TypeEvalContext context, @Nullable PsiElement anchor) {
 
-        if (referenceTarget instanceof PyTypedElement) {
-            PyType referenceType = context.getType((PyTypedElement)referenceTarget);
-            if (referenceType instanceof PyClassType) {
-                PyClass pyClass = ((PyClassType)referenceType).getPyClass();
-                SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
-                if (!sti.getMembers().isEmpty()) {
-                    return new ClassWithSyntheticMembersType(sti, pyClass, referenceTarget.equals(pyClass));
-                }
-            }
-        }
+//        if (referenceTarget instanceof PyTypedElement) {
+//            PyType referenceType = context.getType((PyTypedElement)referenceTarget);
+//            if (referenceType instanceof PyClassType) {
+//                PyClass pyClass = ((PyClassType)referenceType).getPyClass();
+//                SyntheticTypeInfo sti = new SyntheticTypeInfoReader(pyClass).read();
+//                if (!sti.getMembers().isEmpty()) {
+//                    return new ClassWithSyntheticMembersType(sti, pyClass, referenceTarget.equals(pyClass));
+//                }
+//            }
+//        }
 
         return super.getReferenceType(referenceTarget, context, anchor);
     }
