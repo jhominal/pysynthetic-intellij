@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.wishtack.pysynthetic.intellij</id>
   <name>PySynthetic</name>
-  <version>0.3.1</version>
+  <version>0.3.2</version>
   <vendor email="" url="https://www.wishtack.com/">Wishtack</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.3.2:
+      Fix bugs of 0.3.1, remove auto-completion improvements for get/set accessors.<br>
       0.3.1:
       Fixes to synthetic Initializer support, improved auto-completion for get/set accessors.<br>
       0.3.0:

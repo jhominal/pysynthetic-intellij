@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## 0.3.2
+
+### Changed
+
+ * Fix bugs introduced by 0.3.1 (many erroneous warnings in IDE).
+ * Revert tweak of getter/setter auto-completion.
+
 ## 0.3.1
 
 ### Changed
