@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## Unreleased
+
+### Changed
+
+ * Re-instated tweak of getter/setter auto-completion.
+
 ## 0.3.2
 
 ### Changed

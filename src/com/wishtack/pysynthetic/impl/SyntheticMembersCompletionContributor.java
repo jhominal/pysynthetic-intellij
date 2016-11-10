@@ -15,7 +15,6 @@ import com.jetbrains.python.psi.types.PyUnionType;
 import com.jetbrains.python.psi.types.TypeEvalContext;
 import com.wishtack.pysynthetic.SyntheticTypeInfo;
 import com.wishtack.pysynthetic.SyntheticTypeInfoReader;
-import com.wishtack.pysynthetic.psi.ClassWithSyntheticMembersType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -44,14 +43,14 @@ public class SyntheticMembersCompletionContributor extends CompletionContributor
 
                     SmartList<SyntheticTypeInfo> nonTrivialSyntheticTypeInfo = new SmartList<>();
 
-                    if (type instanceof PyClassType && !(type instanceof ClassWithSyntheticMembersType)) {
+                    if (type instanceof PyClassType) {
                         SyntheticTypeInfo sti = new SyntheticTypeInfoReader(((PyClassType)type).getPyClass()).read();
                         if (!sti.getMembers().isEmpty()) {
                             nonTrivialSyntheticTypeInfo.add(sti);
                         }
                     } else if (type instanceof PyUnionType) {
                         for (PyType typePossibility : ((PyUnionType)type).getMembers()) {
-                            if (typePossibility instanceof PyClassType && !(typePossibility instanceof ClassWithSyntheticMembersType)) {
+                            if (typePossibility instanceof PyClassType) {
                                 SyntheticTypeInfo sti = new SyntheticTypeInfoReader(((PyClassType)typePossibility).getPyClass()).read();
                                 if (!sti.getMembers().isEmpty()) {
                                     nonTrivialSyntheticTypeInfo.add(sti);
