@@ -23,17 +23,17 @@ public abstract class SyntheticMemberInfo {
     @NotNull
     private final String myName;
     private final boolean myReadOnly;
-    @Nullable
-    private final PyType myMemberType;
+    @NotNull
+    private final PyContractAnalysisResult myContractAnalysis;
     @Nullable
     private final PyExpression myDefaultValue;
 
-    protected SyntheticMemberInfo(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
+    protected SyntheticMemberInfo(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @NotNull PyContractAnalysisResult contractAnalysis, @Nullable PyExpression defaultValue) {
         myClass = pyClass;
         myDefinitionDecorator = definitionDecorator;
         myName = name;
         myReadOnly = readOnly;
-        myMemberType = memberType;
+        myContractAnalysis = contractAnalysis;
         myDefaultValue = defaultValue;
     }
 
@@ -54,7 +54,11 @@ public abstract class SyntheticMemberInfo {
 
     @Nullable
     public PyType getMemberType() {
-        return myMemberType;
+        return myContractAnalysis.getContractType();
+    }
+
+    public boolean acceptsNone() {
+        return myContractAnalysis.isAcceptNone();
     }
 
     @Nullable

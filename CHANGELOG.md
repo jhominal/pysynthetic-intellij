@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+ * Show warning when a synthetic constructor is called without filling a member
+   that has no specified default, and cannot accept `None`.
+
 ### Changed
 
  * Re-instated tweak of getter/setter auto-completion.

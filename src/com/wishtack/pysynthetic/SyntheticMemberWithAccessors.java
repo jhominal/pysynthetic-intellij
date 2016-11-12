@@ -28,8 +28,8 @@ public final class SyntheticMemberWithAccessors extends SyntheticMemberInfo {
     @Nullable
     private final String mySetterName;
 
-    public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, @Nullable String setterName, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
-        super(pyClass, definitionDecorator, name, setterName == null, memberType, defaultValue);
+    public SyntheticMemberWithAccessors(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, @NotNull String getterName, @Nullable String setterName, @NotNull PyContractAnalysisResult contractAnalysis, @Nullable PyExpression defaultValue) {
+        super(pyClass, definitionDecorator, name, setterName == null, contractAnalysis, defaultValue);
 
         myGetterName = getterName;
         mySetterName = setterName;

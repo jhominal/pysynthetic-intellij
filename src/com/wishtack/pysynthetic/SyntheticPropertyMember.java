@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public final class SyntheticPropertyMember extends SyntheticMemberInfo {
 
-    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @Nullable PyType memberType, @Nullable PyExpression defaultValue) {
-        super(pyClass, definitionDecorator, name, readOnly, memberType, defaultValue);
+    public SyntheticPropertyMember(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @NotNull PyContractAnalysisResult contractAnalysis, @Nullable PyExpression defaultValue) {
+        super(pyClass, definitionDecorator, name, readOnly, contractAnalysis, defaultValue);
     }
 
     @Override

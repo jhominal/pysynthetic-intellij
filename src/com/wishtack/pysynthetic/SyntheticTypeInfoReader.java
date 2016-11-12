@@ -5,6 +5,7 @@ import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
+import com.jetbrains.python.psi.types.PyClassTypeImpl;
 import com.jetbrains.python.psi.types.PyType;
 import com.jetbrains.python.psi.types.PyTypeParser;
 import com.wishtack.pysynthetic.contracts.ContractNode;
@@ -103,11 +104,11 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
         boolean readOnly = readReadOnlyValue(decorator, camelCase);
 
-        PyType memberType = readMemberTypeFromContract(decorator);
+        PyContractAnalysisResult contractAnalysis = analyzeContract(decorator);
 
         PyExpression defaultValue = readDefault(decorator);
 
-        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly, memberType, defaultValue);
+        return new SyntheticPropertyMember(myPyClass, decorator, memberNameExpression.getStringValue(), readOnly, contractAnalysis, defaultValue);
     }
 
     @Nullable
@@ -140,11 +141,11 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
             }
         }
 
-        PyType memberType = readMemberTypeFromContract(decorator);
+        PyContractAnalysisResult contractAnalysis = analyzeContract(decorator);
 
         PyExpression defaultValue = readDefault(decorator);
 
-        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName, memberType, defaultValue);
+        return new SyntheticMemberWithAccessors(myPyClass, decorator, memberName, getterName, setterName, contractAnalysis, defaultValue);
     }
 
     private static boolean readReadOnlyValue(PyDecorator decorator, boolean camelCase) {
@@ -157,8 +158,10 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
         return result;
     }
 
-    @Nullable
-    private PyType readMemberTypeFromContract(PyDecorator decorator) {
+    private static final PyContractAnalysisResult noContractResult = new PyContractAnalysisResult(null, true);
+
+    @NotNull
+    private PyContractAnalysisResult analyzeContract(PyDecorator decorator) {
         PyExpression contractExpression = decorator.getKeywordArgument("contract");
 
         if (contractExpression instanceof PyReferenceExpression) {
@@ -167,10 +170,11 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
             if (referencedElement instanceof PyClass) {
                 PyClass memberClass = (PyClass)referencedElement;
-                return PyPsiFacade.getInstance(myPyClass.getProject()).createClassType(memberClass, false);
+                PyType pyType = new PyClassTypeImpl(memberClass, false);
+                return new PyContractAnalysisResult(pyType, false);
             }
 
-            return null;
+            return noContractResult;
         }
 
         if (contractExpression instanceof StringLiteralExpression) {
@@ -179,12 +183,13 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
             ContractNode parsedContract = PyContractsUtil.parse(contract);
 
             if (parsedContract != null) {
-                PyContractsTypeComputer typeComputer = new PyContractsTypeComputer(myPyClass);
-                return parsedContract.accept(typeComputer);
+                PyType computedType = parsedContract.accept(new PyContractsTypeComputer(myPyClass));
+                boolean acceptNone = parsedContract.accept(new PyContractsNoneAnalyzer());
+                return new PyContractAnalysisResult(computedType, acceptNone);
             }
         }
 
-        return null;
+        return noContractResult;
     }
 
     @Nullable
