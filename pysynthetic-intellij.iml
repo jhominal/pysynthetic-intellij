@@ -10,5 +10,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="org.parboiled:parboiled-java:1.0.2" type="repository">
+        <properties maven-id="org.parboiled:parboiled-java:1.0.2" />
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/parboiled/parboiled-java/1.0.2/parboiled-java-1.0.2.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/asm/asm/3.3.1/asm-3.3.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/asm/asm-util/3.3.1/asm-util-3.3.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/asm/asm-tree/3.3.1/asm-tree-3.3.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/asm/asm-analysis/3.3.1/asm-analysis-3.3.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/parboiled/parboiled-core/1.0.2/parboiled-core-1.0.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/parboiled/parboiled-java/1.0.2/parboiled-java-1.0.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -7,6 +7,8 @@ import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
 import com.jetbrains.python.psi.types.PyType;
 import com.jetbrains.python.psi.types.PyTypeParser;
+import com.wishtack.pysynthetic.contracts.ContractNode;
+import com.wishtack.pysynthetic.contracts.PyContractsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -173,10 +175,12 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
         if (contractExpression instanceof StringLiteralExpression) {
             String contract = ((StringLiteralExpression)contractExpression).getStringValue();
-            String contractType = PyContractsSimpleParser.getSimpleNonTrivialTypeContractString(contract);
 
-            if (contractType != null) {
-                return PyTypeParser.getTypeByName(myPyClass, contractType);
+            ContractNode parsedContract = PyContractsUtil.parse(contract);
+
+            if (parsedContract != null) {
+                PyContractsTypeComputer typeComputer = new PyContractsTypeComputer(myPyClass);
+                return parsedContract.accept(typeComputer);
             }
         }
 

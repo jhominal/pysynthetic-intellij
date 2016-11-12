@@ -8,3 +8,7 @@ The goal of this plugin is to provide:
  * Auto-completion of the names of generated members when using PySynthetic-using types;
  * Type information for the generated members, if available (via the use of `contract`);
  * Initializer editing assistance;
+
+This plugin uses Parboiled for parsing contracts. Because of a dependency issue
+(IntelliJ already has an asm.jar in its classpath, in version 3.3.1), we depend
+on Parboiled version 1.0.2.

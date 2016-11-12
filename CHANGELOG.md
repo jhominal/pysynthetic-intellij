@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
  * Re-instated tweak of getter/setter auto-completion.
+ * Most contract expressions that do not involve variables or numpy
+   are now supported, and return useful auto-completion results.
 
 ## 0.3.2
 
