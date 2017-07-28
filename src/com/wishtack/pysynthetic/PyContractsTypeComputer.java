@@ -7,6 +7,7 @@ import com.wishtack.pysynthetic.contracts.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -120,14 +121,14 @@ public class PyContractsTypeComputer extends ContractNodeVisitor<PyType> {
         if (tupleNode.getLengthContract() != null) {
             if (tupleNode.getLengthContract().getOperator() == null) {
                 PyType[] elementTypes = new PyType[tupleNode.getLengthContract().getValue()];
-                return PyTupleType.create(definitionClass, elementTypes);
+                return PyTupleType.create(definitionClass, Arrays.asList(elementTypes));
             }
         } else if (tupleNode.getElements().size() != 0) {
             PyType[] elementTypes = new PyType[tupleNode.getElements().size()];
             for (int i = 0; i < elementTypes.length; i++) {
                 elementTypes[i] = tupleNode.getElements().get(i).accept(this);
             }
-            return PyTupleType.create(definitionClass, elementTypes);
+            return PyTupleType.create(definitionClass, Arrays.asList(elementTypes));
         }
 
         return PyTypeParser.getTypeByName(definitionClass, "tuple");
