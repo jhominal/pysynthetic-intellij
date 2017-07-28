@@ -13,6 +13,8 @@ import java.util.List;
  *
  * Created by Jean Hominal on 2016-11-11.
  */
+// Disable inspection because this class must be extended at runtime.
+@SuppressWarnings("WeakerAccess")
 public class PyContractsParser extends BaseParser<ContractNode> {
 
     public Rule Input() {

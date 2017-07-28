@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * A class to easily implement equality and hashes on list elements.
+ * If the lists are mutated, there will be issues with the hashCode generation.
+ *
  * Created by Jean Hominal on 2016-11-11.
  */
 final class ListUtil {
