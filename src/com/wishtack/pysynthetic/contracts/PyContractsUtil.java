@@ -9,7 +9,7 @@ import org.parboiled.support.ParsingResult;
  */
 public class PyContractsUtil {
 
-    private static final PyContractsParser FACTORY = Parboiled.createParser(PyContractsParser.class);;
+    private static final PyContractsParser FACTORY = Parboiled.createParser(PyContractsParser.class);
 
     public static ContractNode parse(String contract) {
         PyContractsParser parser = FACTORY.newInstance();
