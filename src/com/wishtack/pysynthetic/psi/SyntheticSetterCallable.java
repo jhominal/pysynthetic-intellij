@@ -97,7 +97,6 @@ public class SyntheticSetterCallable extends AbstractAccessor {
             return "(self, value)";
         }
 
-        @Nullable
         @Override
         public PyFunction getContainingFunction() {
             return SyntheticSetterCallable.this;

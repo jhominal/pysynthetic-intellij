@@ -152,7 +152,6 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
         return null;
     }
 
-    @Nullable
     @Override
     public final PyFunction asMethod() {
         return this;
