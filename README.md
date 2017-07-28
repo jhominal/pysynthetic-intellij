@@ -10,5 +10,5 @@ The goal of this plugin is to provide:
  * Initializer editing assistance;
 
 This plugin uses Parboiled for parsing contracts. Because of a dependency issue
-(IntelliJ already has an asm.jar in its classpath, in version 3.3.1), we depend
-on Parboiled version 1.0.2.
+(IntelliJ already has an asm.jar in its classpath, in version 5.0.3), we depend
+on Parboiled version 1.1.7.
