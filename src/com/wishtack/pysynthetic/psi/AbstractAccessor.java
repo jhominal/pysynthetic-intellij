@@ -27,7 +27,7 @@ import java.util.List;
  */
 public abstract class AbstractAccessor extends ASTWrapperPsiElement implements PyFunction {
 
-    protected AbstractAccessor(@NotNull ASTNode node) {
+    AbstractAccessor(@NotNull ASTNode node) {
         super(node);
     }
 

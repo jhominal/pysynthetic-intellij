@@ -28,7 +28,7 @@ public abstract class SyntheticMemberInfo {
     @Nullable
     private final PyExpression myDefaultValue;
 
-    protected SyntheticMemberInfo(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @NotNull PyContractAnalysisResult contractAnalysis, @Nullable PyExpression defaultValue) {
+    SyntheticMemberInfo(@NotNull PyClass pyClass, @NotNull PyDecorator definitionDecorator, @NotNull String name, boolean readOnly, @NotNull PyContractAnalysisResult contractAnalysis, @Nullable PyExpression defaultValue) {
         myClass = pyClass;
         myDefinitionDecorator = definitionDecorator;
         myName = name;

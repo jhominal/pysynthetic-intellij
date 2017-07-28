@@ -11,12 +11,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by Jean Hominal on 2016-11-06.
  */
-public class VirtualParameter extends PyNamedParameterImpl {
+class VirtualParameter extends PyNamedParameterImpl {
 
     private final PyType myParameterType;
     private final boolean mySelf;
 
-    public VirtualParameter(PyType parameterType, String name, boolean isSelf) {
+    VirtualParameter(PyType parameterType, String name, boolean isSelf) {
         super(new PyNamedParameterStubImpl(name, false, false, false, null, null, PyElementTypes.NAMED_PARAMETER));
         myParameterType = parameterType;
         mySelf = isSelf;
