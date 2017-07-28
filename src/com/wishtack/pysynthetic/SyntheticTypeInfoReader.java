@@ -7,7 +7,6 @@ import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
 import com.jetbrains.python.psi.types.PyClassTypeImpl;
 import com.jetbrains.python.psi.types.PyType;
-import com.jetbrains.python.psi.types.PyTypeParser;
 import com.wishtack.pysynthetic.contracts.ContractNode;
 import com.wishtack.pysynthetic.contracts.PyContractsUtil;
 import org.jetbrains.annotations.NotNull;

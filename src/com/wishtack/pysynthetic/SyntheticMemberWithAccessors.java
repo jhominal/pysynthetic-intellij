@@ -8,7 +8,6 @@ import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
-import com.jetbrains.python.psi.types.PyType;
 import com.wishtack.pysynthetic.psi.SyntheticGetterCallable;
 import com.wishtack.pysynthetic.psi.SyntheticSetterCallable;
 import org.jetbrains.annotations.NotNull;

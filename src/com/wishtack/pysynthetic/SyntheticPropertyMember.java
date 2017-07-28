@@ -6,7 +6,6 @@ import com.intellij.psi.PsiElement;
 import com.jetbrains.python.psi.PyClass;
 import com.jetbrains.python.psi.PyDecorator;
 import com.jetbrains.python.psi.PyExpression;
-import com.jetbrains.python.psi.types.PyType;
 import com.wishtack.pysynthetic.psi.SyntheticPropertyElement;
 import icons.PythonIcons;
 import org.jetbrains.annotations.NotNull;
