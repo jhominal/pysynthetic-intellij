@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,10 +28,18 @@ public class SyntheticGetterCallable extends AbstractAccessor {
     @NotNull
     private final PyParameterList myParameterList;
 
+    @NotNull
+    private final List<PyCallableParameter> myParameters;
+
     public SyntheticGetterCallable(@NotNull SyntheticMemberWithAccessors memberInfo) {
         super(memberInfo.getDefinitionDecorator().getNode());
         myMemberInfo = memberInfo;
         myParameterList = new ParameterList(memberInfo);
+        myParameters = Collections.unmodifiableList(
+                Arrays.stream(myParameterList.getParameters())
+                        .map(PyCallableParameterImpl::psi)
+                        .collect(Collectors.toList())
+        );
     }
 
     private final class ParameterList extends ASTWrapperPsiElement implements PyParameterList {
@@ -79,6 +88,12 @@ public class SyntheticGetterCallable extends AbstractAccessor {
             return "(self)";
         }
 
+        @NotNull
+        @Override
+        public String getPresentableText(boolean b, @Nullable TypeEvalContext typeEvalContext) {
+            return "(self)";
+        }
+
         @Nullable
         @Override
         public PyFunction getContainingFunction() {
@@ -98,6 +113,12 @@ public class SyntheticGetterCallable extends AbstractAccessor {
 
     @NotNull
     @Override
+    public List<PyCallableParameter> getParameters(@NotNull TypeEvalContext typeEvalContext) {
+        return myParameters;
+    }
+
+    @NotNull
+    @Override
     public PyParameterList getParameterList() {
         return myParameterList;
     }
@@ -110,13 +131,19 @@ public class SyntheticGetterCallable extends AbstractAccessor {
 
     @Nullable
     @Override
+    public PyType getReturnStatementType(TypeEvalContext typeEvalContext) {
+        return myMemberInfo.getMemberType();
+    }
+
+    @Nullable
+    @Override
     public PyType getCallType(@NotNull TypeEvalContext typeEvalContext, @NotNull PyCallSiteExpression pyCallSiteExpression) {
         return myMemberInfo.getMemberType();
     }
 
     @Nullable
     @Override
-    public PyType getCallType(@Nullable PyExpression pyExpression, @NotNull Map<PyExpression, PyNamedParameter> map, @NotNull TypeEvalContext typeEvalContext) {
+    public PyType getCallType(@Nullable PyExpression pyExpression, @NotNull Map<PyExpression, PyCallableParameter> map, @NotNull TypeEvalContext typeEvalContext) {
         return myMemberInfo.getMemberType();
     }
 
@@ -140,10 +167,6 @@ public class SyntheticGetterCallable extends AbstractAccessor {
     @Nullable
     @Override
     public PyType getType(@NotNull TypeEvalContext typeEvalContext, @NotNull TypeEvalContext.Key key) {
-        List<PyCallableParameter> parameterList = Arrays.stream(myParameterList.getParameters())
-                .map(PyCallableParameterImpl::psi)
-                .collect(Collectors.toList());
-
-        return new PyCallableTypeImpl(parameterList, myMemberInfo.getMemberType());
+        return new PyCallableTypeImpl(myParameters, myMemberInfo.getMemberType());
     }
 }

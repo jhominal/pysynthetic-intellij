@@ -60,6 +60,16 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
         return false;
     }
 
+    @Override
+    public final boolean isAsyncAllowed() {
+        return false;
+    }
+
+    @Override
+    public final boolean isGenerator() {
+        return false;
+    }
+
     @Nullable
     @Override
     public final Property getProperty() {
