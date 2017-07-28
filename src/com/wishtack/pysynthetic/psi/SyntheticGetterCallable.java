@@ -141,7 +141,7 @@ public class SyntheticGetterCallable extends AbstractAccessor {
     @Override
     public PyType getType(@NotNull TypeEvalContext typeEvalContext, @NotNull TypeEvalContext.Key key) {
         List<PyCallableParameter> parameterList = Arrays.stream(myParameterList.getParameters())
-                .map(PyCallableParameterImpl::new)
+                .map(PyCallableParameterImpl::psi)
                 .collect(Collectors.toList());
 
         return new PyCallableTypeImpl(parameterList, myMemberInfo.getMemberType());

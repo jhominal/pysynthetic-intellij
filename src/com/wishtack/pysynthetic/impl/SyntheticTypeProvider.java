@@ -56,17 +56,17 @@ public class SyntheticTypeProvider extends PyTypeProviderBase {
             ArrayList<PyCallableParameter> allInitParameters = new ArrayList<>(originalParameters.length + syntheticParameters.size());
 
             for (int i = 0; i < originalKeywordContainerIndex; i++) {
-                allInitParameters.add(new PyCallableParameterImpl(originalParameters[i]));
+                allInitParameters.add(PyCallableParameterImpl.psi(originalParameters[i]));
             }
 
             for (PyNamedParameter syntheticParameter : syntheticParameters) {
                 if (unavailableParameterNames.add(syntheticParameter.getName())) {
-                    allInitParameters.add(new PyCallableParameterImpl(syntheticParameter));
+                    allInitParameters.add(PyCallableParameterImpl.psi(syntheticParameter));
                 }
             }
 
             for (int i = originalKeywordContainerIndex; i < originalParameters.length; i++) {
-                allInitParameters.add(new PyCallableParameterImpl(originalParameters[i]));
+                allInitParameters.add(PyCallableParameterImpl.psi(originalParameters[i]));
             }
 
             return new PyCallableTypeImpl(Collections.unmodifiableList(allInitParameters), context.getReturnType(callable));
