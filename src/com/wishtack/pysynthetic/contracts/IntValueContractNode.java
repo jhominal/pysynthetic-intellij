@@ -1,6 +1,7 @@
 package com.wishtack.pysynthetic.contracts;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -9,14 +10,16 @@ import java.util.Objects;
  */
 public final class IntValueContractNode extends ContractNode {
 
+    @Nullable
     private final String operator;
     private final int value;
 
-    public IntValueContractNode(String operator, int value) {
+    public IntValueContractNode(@Nullable String operator, int value) {
         this.operator = operator;
         this.value = value;
     }
 
+    @Nullable
     public String getOperator() {
         return operator;
     }

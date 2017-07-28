@@ -16,6 +16,7 @@ public final class AndContractNode extends ContractNode {
         this.elements = elements;
     }
 
+    @NotNull
     public List<ContractNode> getElements() {
         return elements;
     }
