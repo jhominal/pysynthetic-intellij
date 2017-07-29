@@ -46,6 +46,6 @@ public final class AndContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "PossibleAnd(" + ListUtil.toString(elements) + ")";
+        return "And(" + ListUtil.toString(elements) + ")";
     }
 }

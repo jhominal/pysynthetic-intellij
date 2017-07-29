@@ -46,7 +46,7 @@ public final class OrContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "PossibleOr(" + ListUtil.toString(elements) + ")";
+        return "Or(" + ListUtil.toString(elements) + ")";
     }
 
 }
