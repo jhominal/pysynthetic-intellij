@@ -20,7 +20,7 @@ public class PyContractsTypeComputer extends ContractNodeVisitor<PyType> {
 
     private final PyClass definitionClass;
 
-    public PyContractsTypeComputer(@NotNull PyClass definitionClass) {
+    PyContractsTypeComputer(@NotNull PyClass definitionClass) {
         this.definitionClass = definitionClass;
     }
 
