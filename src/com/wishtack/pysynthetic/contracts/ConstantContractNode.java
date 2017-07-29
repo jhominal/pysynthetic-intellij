@@ -9,7 +9,7 @@ public final class ConstantContractNode extends ContractNode {
 
     private final boolean value;
 
-    public ConstantContractNode(boolean value) {
+    ConstantContractNode(boolean value) {
         this.value = value;
     }
 

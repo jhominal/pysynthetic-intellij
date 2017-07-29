@@ -19,7 +19,7 @@ public final class MappingContractNode extends ContractNode {
     @Nullable
     private final ContractNode valueContract;
 
-    public MappingContractNode(@NotNull String mappingType, @Nullable IntValueContractNode lengthContract, @Nullable ContractNode keyContract, @Nullable ContractNode valueContract) {
+    MappingContractNode(@NotNull String mappingType, @Nullable IntValueContractNode lengthContract, @Nullable ContractNode keyContract, @Nullable ContractNode valueContract) {
         this.mappingType = mappingType;
         this.lengthContract = lengthContract;
         this.keyContract = keyContract;

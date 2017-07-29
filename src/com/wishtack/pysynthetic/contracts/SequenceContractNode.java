@@ -17,7 +17,7 @@ public final class SequenceContractNode extends ContractNode {
     @Nullable
     private final ContractNode elementContract;
 
-    public SequenceContractNode(@NotNull String sequenceType, @Nullable IntValueContractNode lengthContract, @Nullable ContractNode elementContract) {
+    SequenceContractNode(@NotNull String sequenceType, @Nullable IntValueContractNode lengthContract, @Nullable ContractNode elementContract) {
 
         this.sequenceType = sequenceType;
         this.lengthContract = lengthContract;

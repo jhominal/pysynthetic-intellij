@@ -14,7 +14,7 @@ public final class IntValueContractNode extends ContractNode {
     private final String operator;
     private final int value;
 
-    public IntValueContractNode(@Nullable String operator, int value) {
+    IntValueContractNode(@Nullable String operator, int value) {
         this.operator = operator;
         this.value = value;
     }

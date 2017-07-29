@@ -12,7 +12,7 @@ public final class NamedContractNode extends ContractNode {
     @NotNull
     private final String identifier;
 
-    public NamedContractNode(@NotNull String identifier) {
+    NamedContractNode(@NotNull String identifier) {
         this.identifier = identifier;
     }
 

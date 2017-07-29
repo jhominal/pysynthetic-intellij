@@ -17,7 +17,7 @@ public final class TupleContractNode extends ContractNode {
     @NotNull
     private final List<ContractNode> elements;
 
-    public TupleContractNode(@Nullable IntValueContractNode lengthContract, @NotNull List<ContractNode> elements) {
+    TupleContractNode(@Nullable IntValueContractNode lengthContract, @NotNull List<ContractNode> elements) {
         this.lengthContract = lengthContract;
         this.elements = elements;
     }

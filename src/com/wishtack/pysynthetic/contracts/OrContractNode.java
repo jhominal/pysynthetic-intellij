@@ -12,7 +12,7 @@ public final class OrContractNode extends ContractNode {
     @NotNull
     private final List<ContractNode> elements;
 
-    public OrContractNode(@NotNull List<ContractNode> elements) {
+    OrContractNode(@NotNull List<ContractNode> elements) {
         this.elements = elements;
     }
 

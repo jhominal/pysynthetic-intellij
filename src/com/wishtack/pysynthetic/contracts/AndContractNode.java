@@ -12,7 +12,7 @@ public final class AndContractNode extends ContractNode {
     @NotNull
     private final List<ContractNode> elements;
 
-    public AndContractNode(@NotNull List<ContractNode> elements) {
+    AndContractNode(@NotNull List<ContractNode> elements) {
         this.elements = elements;
     }
 
