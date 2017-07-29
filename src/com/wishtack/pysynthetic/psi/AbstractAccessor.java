@@ -37,8 +37,11 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
         return null;
     }
 
+    //TODO: Remove this function completely when updating for 173
+    @SuppressWarnings("unused")
     @Nullable
-    @Override
+    //Note: This function was removed between versions 172.3317.7 and 172.3317.93 of Python CE
+    //@Override
     public final PyType getReturnTypeFromDocString() {
         return null;
     }
