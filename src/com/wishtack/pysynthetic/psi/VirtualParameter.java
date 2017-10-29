@@ -17,7 +17,7 @@ class VirtualParameter extends PyNamedParameterImpl {
     private final boolean mySelf;
 
     VirtualParameter(PyType parameterType, String name, boolean isSelf) {
-        super(new PyNamedParameterStubImpl(name, false, false, false, null, null, PyElementTypes.NAMED_PARAMETER));
+        super(new PyNamedParameterStubImpl(name, false, false, null, null, null, null, PyElementTypes.NAMED_PARAMETER));
         myParameterType = parameterType;
         mySelf = isSelf;
     }

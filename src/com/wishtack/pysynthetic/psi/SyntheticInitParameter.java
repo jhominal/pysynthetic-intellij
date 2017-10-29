@@ -19,8 +19,14 @@ public class SyntheticInitParameter extends PyNamedParameterImpl {
 
     @NotNull
     private static PyNamedParameterStub createVirtualStub(@NotNull SyntheticMemberInfo syntheticMemberInfo) {
-        boolean hasDefault = syntheticMemberInfo.getDefaultValue() != null || syntheticMemberInfo.acceptsNone();
-        return new PyNamedParameterStubImpl(syntheticMemberInfo.getName(), false, false, hasDefault, null, null, PyElementTypes.NAMED_PARAMETER);
+        String defaultValueText = null;
+        if (syntheticMemberInfo.getDefaultValue() != null) {
+            defaultValueText = syntheticMemberInfo.getDefaultValue().getText();
+        } else if (syntheticMemberInfo.acceptsNone()) {
+            defaultValueText = "None";
+        }
+
+        return new PyNamedParameterStubImpl(syntheticMemberInfo.getName(), false, false, defaultValueText,null, null, null, PyElementTypes.NAMED_PARAMETER);
     }
 
     @NotNull
