@@ -176,4 +176,9 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
     public final Icon getIcon(int flags) {
         return PlatformIcons.METHOD_ICON;
     }
+
+    @Override
+    public boolean onlyRaisesNotImplementedError() {
+        return false;
+    }
 }
