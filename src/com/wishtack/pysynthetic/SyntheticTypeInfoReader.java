@@ -12,8 +12,7 @@ import com.wishtack.pysynthetic.contracts.PyContractsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Created by Jean Hominal on 2016-11-03.
@@ -48,12 +47,13 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
             SyntheticMemberInfo m = null;
 
-            PyCallable callee = d.resolveCalleeFunction(PyResolveContext.defaultContext());
-            if (callee == null) {
+            List<PyCallable> callees = d.multiResolveCalleeFunction(PyResolveContext.defaultContext());
+            Optional<PyCallable> callee = callees.stream().filter(Objects::nonNull).findFirst();
+            if (!callee.isPresent()) {
                 continue;
             }
 
-            String calleeName = callee.getQualifiedName();
+            String calleeName = callee.get().getQualifiedName();
             if (calleeName == null) {
                 continue;
             }
