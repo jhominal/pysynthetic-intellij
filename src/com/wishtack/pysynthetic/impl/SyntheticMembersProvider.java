@@ -2,6 +2,7 @@ package com.wishtack.pysynthetic.impl;
 
 import com.intellij.psi.PsiElement;
 import com.jetbrains.python.codeInsight.PyCustomMember;
+import com.jetbrains.python.psi.resolve.PyResolveContext;
 import com.jetbrains.python.psi.types.PyClassMembersProviderBase;
 import com.jetbrains.python.psi.types.PyClassType;
 import com.jetbrains.python.psi.types.PyClassTypeImpl;
@@ -56,8 +57,8 @@ public class SyntheticMembersProvider extends PyClassMembersProviderBase {
     }
 
     @Override
-    public PsiElement resolveMember(PyClassType clazz, String name, PsiElement location, TypeEvalContext context) {
-        SyntheticTypeInfo typeInfo = new SyntheticTypeInfoReader(clazz.getPyClass()).read();
+    public PsiElement resolveMember(@NotNull PyClassType type, @NotNull String name, PsiElement location, @NotNull PyResolveContext resolveContext) {
+        SyntheticTypeInfo typeInfo = new SyntheticTypeInfoReader(type.getPyClass()).read();
         return typeInfo.getResolveMap().get(name);
     }
 }
