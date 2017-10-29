@@ -10,7 +10,6 @@ import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.PyElementTypes;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.stubs.PyFunctionStub;
-import com.jetbrains.python.psi.types.PyType;
 import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -34,15 +33,6 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
     @Nullable
     @Override
     public final ASTNode getNameNode() {
-        return null;
-    }
-
-    //TODO: Remove this function completely when updating for 173
-    @SuppressWarnings("unused")
-    @Nullable
-    //Note: This function was removed between versions 172.3317.7 and 172.3317.93 of Python CE
-    //@Override
-    public final PyType getReturnTypeFromDocString() {
         return null;
     }
 
