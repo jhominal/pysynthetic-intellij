@@ -85,6 +85,12 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
         return null;
     }
 
+    @Nullable
+    @Override
+    public final String getAnnotationValue() {
+        return null;
+    }
+
     @NotNull
     @Override
     public final List<PyAssignmentStatement> findAttributes() {
