@@ -120,6 +120,8 @@ public class PyContractsTypeComputer extends ContractNodeVisitor<PyType> {
         // Code inserted because it feels right, but it currently has no observable effect.
         if (tupleNode.getLengthContract() != null) {
             if (tupleNode.getLengthContract().getOperator() == null) {
+                // The array is filled with null, which is what we want.
+                @SuppressWarnings("MismatchedReadAndWriteOfArray")
                 PyType[] elementTypes = new PyType[tupleNode.getLengthContract().getValue()];
                 return PyTupleType.create(definitionClass, Arrays.asList(elementTypes));
             }
