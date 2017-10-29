@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## 0.5.0
+
+### Added
+
+ * Support for IntelliJ IDEA platform version 172
+ * README file + IDE files for easier project setup
+
+### Changed
+
+ * Updated parboiled version to 1.1.7 (to be in sync with version of asm shipped in IntelliJ IDEA)
+
+### Removed
+
+ * Support for IntelliJ IDEA platform versions below 172
+
 ## 0.4.0
 
 ### Added
