@@ -45,3 +45,11 @@ Build Python Community Edition version: 2017.2.172.3317.7
    * Add `python/src` to the SDK source paths
    * Warning: The downloaded source files are not an exact match for the compiled plugin. I do not know how to determine
      which commit matches a published plugin version.
+
+## New version publication
+
+ 1. Create tag
+ 2. Compile module to zip file ("Build/Prepare plugin module for deployment...")
+ 3. Push tag and master branch to GitHub
+ 4. Put zip file on GitHub
+ 5. Put zip file on plugins.jetbrains.com
