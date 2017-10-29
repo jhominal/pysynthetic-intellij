@@ -37,7 +37,7 @@ public class SyntheticMembersProvider extends PyClassMembersProviderBase {
 
     @NotNull
     @Override
-    public Collection<PyCustomMember> getMembers(PyClassType clazz, PsiElement location, TypeEvalContext typeEvalContext) {
+    public Collection<PyCustomMember> getMembers(PyClassType clazz, PsiElement location, @NotNull TypeEvalContext typeEvalContext) {
         if (isGettingCompletionVariants()) {
             return Collections.emptyList();
         } else {
