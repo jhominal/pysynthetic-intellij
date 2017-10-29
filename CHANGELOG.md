@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## 0.6.0
+
+### Added
+
+ * Support for IntelliJ IDEA platform version 173
+
+### Removed
+
+ * Support for IntelliJ IDEA platform version 172
+
 ## 0.5.0
 
 ### Added
