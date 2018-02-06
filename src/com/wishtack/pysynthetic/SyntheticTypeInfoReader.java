@@ -3,6 +3,7 @@ package com.wishtack.pysynthetic;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.QualifiedName;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.resolve.PyResolveContext;
 import com.jetbrains.python.psi.types.PyClassTypeImpl;
@@ -47,32 +48,29 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
             SyntheticMemberInfo m = null;
 
-            List<PyCallable> callees = d.multiResolveCalleeFunction(PyResolveContext.defaultContext());
-            Optional<PyCallable> callee = callees.stream().filter(Objects::nonNull).findFirst();
-            if (!callee.isPresent()) {
+            QualifiedName qualifedName = d.getQualifiedName();
+
+            if (qualifedName == null) {
                 continue;
             }
 
-            String calleeName = callee.get().getQualifiedName();
-            if (calleeName == null) {
-                continue;
-            }
+            String calleeName = d.getQualifiedName().toString();
 
             switch (calleeName) {
-                case "synthetic.decorators.synthesize_constructor":
-                case "synthetic.decorators.synthesizeConstructor":
+                case "synthesize_constructor":
+                case "synthesizeConstructor":
                     withConstructor = true;
                     break;
-                case "synthetic.decorators.synthesize_property":
+                case "synthesize_property":
                     m = readProperty(d, false);
                     break;
-                case "synthetic.decorators.synthesizeProperty":
+                case "synthesizeProperty":
                     m = readProperty(d, true);
                     break;
-                case "synthetic.decorators.synthesize_member":
+                case "synthesize_member":
                     m = readMemberWithAccessors(d, false);
                     break;
-                case "synthetic.decorators.synthesizeMember":
+                case "synthesizeMember":
                     m = readMemberWithAccessors(d, true);
                     break;
             }
