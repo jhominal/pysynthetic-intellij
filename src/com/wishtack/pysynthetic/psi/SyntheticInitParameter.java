@@ -26,7 +26,7 @@ public class SyntheticInitParameter extends PyNamedParameterImpl {
             defaultValueText = "None";
         }
 
-        return new PyNamedParameterStubImpl(syntheticMemberInfo.getName(), false, false, defaultValueText,null, null, null, PyElementTypes.NAMED_PARAMETER);
+        return new PyNamedParameterStubImpl(syntheticMemberInfo.getName(), false, false, defaultValueText, null, null, null, PyElementTypes.NAMED_PARAMETER);
     }
 
     @NotNull
