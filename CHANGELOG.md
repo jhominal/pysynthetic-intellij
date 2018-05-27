@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+ * Update plugin declaration for IDEA platform version 182
  * Use standard Java exception `UnsupportedOperationException` instead of Apache Commons `NotImplementedException`
 
 ## 0.6.1

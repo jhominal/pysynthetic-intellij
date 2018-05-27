@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.wishtack.pysynthetic.intellij</id>
   <name>PySynthetic</name>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
   <vendor email="" url="https://www.github.com/jhominal/pysynthetic-intellij">Jean Hominal</vendor>
 
   <description><![CDATA[
@@ -35,7 +35,7 @@
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173" until-build="181.*"/>
+  <idea-version since-build="173" until-build="182.*"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
