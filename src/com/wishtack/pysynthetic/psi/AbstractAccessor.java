@@ -10,7 +10,6 @@ import com.intellij.util.PlatformIcons;
 import com.jetbrains.python.PyElementTypes;
 import com.jetbrains.python.psi.*;
 import com.jetbrains.python.psi.stubs.PyFunctionStub;
-import org.apache.commons.lang.NotImplementedException;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -136,7 +135,7 @@ public abstract class AbstractAccessor extends ASTWrapperPsiElement implements P
     @NotNull
     @Override
     public final PyStatementList getStatementList() {
-        throw new NotImplementedException("No statement list. Sue me.");
+        throw new UnsupportedOperationException("No statement list. Sue me.");
     }
 
     @Nullable

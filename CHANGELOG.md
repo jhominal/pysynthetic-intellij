@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 # Change Log
 
+## Unreleased
+
+### Changed
+
+ * Use standard Java exception `UnsupportedOperationException` instead of Apache Commons `NotImplementedException`
+
 ## 0.6.1
 
 ### Changed
