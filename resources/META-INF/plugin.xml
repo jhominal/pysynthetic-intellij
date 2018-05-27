@@ -10,6 +10,8 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.6.2:
+      Update plugin declaration for IDE major version 182.<br>
       0.6.1:
       Update plugin declaration for IDE major version 181.<br>
       0.6.0:
