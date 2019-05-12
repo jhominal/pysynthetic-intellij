@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.6.3
+
+### Changed
+
+ * Update plugin declaration for IDEA platform version 183
+
 ## 0.6.2
 
 ### Changed
