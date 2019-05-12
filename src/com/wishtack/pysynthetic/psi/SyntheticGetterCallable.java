@@ -63,9 +63,8 @@ public class SyntheticGetterCallable extends AbstractAccessor {
         @Nullable
         @Override
         public PyNamedParameter findParameterByName(@NotNull String s) {
-            switch (s) {
-                case "self":
-                    return myParameters[0].getAsNamed();
+            if ("self".equals(s)) {
+                return myParameters[0].getAsNamed();
             }
             return null;
         }
