@@ -10,6 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      Update plugin declaration no longer to declare a maximum IDEA platform version.<br>
       0.6.3:
       Update plugin declaration for IDE major version 183.<br>
       0.6.2:
@@ -39,7 +40,7 @@
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173" until-build="183.*"/>
+  <idea-version since-build="173"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
