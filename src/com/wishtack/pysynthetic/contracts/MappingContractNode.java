@@ -79,7 +79,7 @@ public final class MappingContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "Mapping(" + mappingType + ",length=" + Objects.toString(lengthContract) +
-                ",key=" + Objects.toString(keyContract) + ",value=" + Objects.toString(valueContract) + ")";
+        return "Mapping(" + mappingType + ",length=" + lengthContract +
+                ",key=" + keyContract + ",value=" + valueContract + ")";
     }
 }

@@ -71,7 +71,7 @@ public final class SequenceContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "Sequence(" + sequenceType + ",length=" + Objects.toString(lengthContract) +
-                ",element=" + Objects.toString(elementContract) + ")";
+        return "Sequence(" + sequenceType + ",length=" + lengthContract +
+                ",element=" + elementContract + ")";
     }
 }

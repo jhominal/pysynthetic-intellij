@@ -55,9 +55,9 @@ public final class IntValueContractNode extends ContractNode {
     @Override
     public String toString() {
         if (operator == null) {
-            return "IntValue(" + Integer.toString(value) + ")";
+            return "IntValue(" + value + ")";
         } else {
-            return "IntValue(" + operator + Integer.toString(value) + ")";
+            return "IntValue(" + operator + value + ")";
         }
     }
 }

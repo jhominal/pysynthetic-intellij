@@ -42,6 +42,6 @@ public final class ConstantContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "Constant(" + Boolean.toString(value) + ")";
+        return "Constant(" + value + ")";
     }
 }

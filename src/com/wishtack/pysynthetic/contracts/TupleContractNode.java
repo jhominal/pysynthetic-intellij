@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Jean Hominal on 2016-11-11.
@@ -57,6 +56,6 @@ public final class TupleContractNode extends ContractNode {
 
     @Override
     public String toString() {
-        return "Tuple(length=" + Objects.toString(lengthContract) + ",elements=" + ListUtil.toString(elements) + ")";
+        return "Tuple(length=" + lengthContract + ",elements=" + ListUtil.toString(elements) + ")";
     }
 }
