@@ -15,8 +15,8 @@ on Parboiled version 1.1.7.
 
 ## Development setup
 
-Build IDE version: 172.3317
-Build Python Community Edition version: 2017.2.172.3317.7
+Build IDE version: 191.7141
+Build Python Community Edition version: 2019.1.191.7141.2
 
  1. IDE setup
 
