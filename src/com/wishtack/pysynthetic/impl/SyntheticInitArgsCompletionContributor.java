@@ -88,7 +88,7 @@ public class SyntheticInitArgsCompletionContributor extends CompletionContributo
 
         @Override
         protected void addCompletions(@NotNull CompletionParameters parameters,
-                                      ProcessingContext processingContext,
+                                      @NotNull ProcessingContext processingContext,
                                       @NotNull CompletionResultSet result) {
 
             final PsiElement original = parameters.getOriginalPosition();

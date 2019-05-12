@@ -55,6 +55,7 @@ public class SyntheticSetterCallable extends AbstractAccessor {
             };
         }
 
+        @NotNull
         @Override
         public PyParameter[] getParameters() {
             return myParameters;
@@ -133,7 +134,7 @@ public class SyntheticSetterCallable extends AbstractAccessor {
 
     @Nullable
     @Override
-    public PyType getReturnStatementType(TypeEvalContext typeEvalContext) {
+    public PyType getReturnStatementType(@NotNull TypeEvalContext typeEvalContext) {
         return PyNoneType.INSTANCE;
     }
 
