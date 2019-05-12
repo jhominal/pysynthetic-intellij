@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.wishtack.pysynthetic.intellij</id>
   <name>PySynthetic</name>
-  <version>0.6.3</version>
+  <version>0.7.0</version>
   <vendor email="" url="https://www.github.com/jhominal/pysynthetic-intellij">Jean Hominal</vendor>
 
   <description><![CDATA[
@@ -10,6 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      0.7.0:
       Update plugin declaration no longer to declare a maximum IDEA platform version.<br>
       0.6.3:
       Update plugin declaration for IDE major version 183.<br>

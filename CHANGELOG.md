@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.7.0
+
 ### Changed
 
  * Update plugin declaration no longer to declare a maximum IDEA platform version
