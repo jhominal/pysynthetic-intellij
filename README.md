@@ -26,6 +26,9 @@ Build Python Community Edition version: 2017.2.172.3317.7
      that matches the IDE version.
    * Open the pysynthetic-intellij project in IDEA
      * Configure an IntelliJ SDK version that matches the current IDE version
+       * Open 'File/Project Structure...'
+       * Add an IntelliJ Plugin development SDK if it does not exist, in 'Platform Settings/SDKs'
+       * Configure the project to use the newly-created SDK, in 'Project Settings/Project'
      * In the SDK Library classpath, add `lib/python-ce.jar` (you will have to unzip the plugin zip file)
 
    Now, you should be able to successfully build the plugin using the entries in the "Build" menu.
