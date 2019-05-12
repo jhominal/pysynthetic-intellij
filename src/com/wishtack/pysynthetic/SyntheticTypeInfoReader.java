@@ -120,7 +120,7 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
 
         String getterName;
         PyExpression getterNameExpression = decorator.getKeywordArgument(camelCase ? "getterName" : "getter_name");
-        if (getterNameExpression == null || !(getterNameExpression instanceof StringLiteralExpression)) {
+        if (!(getterNameExpression instanceof StringLiteralExpression)) {
             getterName = memberName;
         } else {
             getterName = ((StringLiteralExpression)getterNameExpression).getStringValue();
@@ -129,7 +129,7 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
         String setterName = null;
         if (!readOnly) {
             PyExpression setterNameExpression = decorator.getKeywordArgument(camelCase ? "setterName" : "setter_name");
-            if (setterNameExpression == null || !(setterNameExpression instanceof StringLiteralExpression)) {
+            if (!(setterNameExpression instanceof StringLiteralExpression)) {
                 if (camelCase) {
                     setterName = "set" + Character.toUpperCase(memberName.charAt(0)) + memberName.substring(1);
                 } else {
@@ -151,7 +151,7 @@ public class SyntheticTypeInfoReader implements CachedValueProvider<SyntheticTyp
         boolean result = false;
         PyExpression readOnlyExpression = decorator.getKeywordArgument(camelCase ? "readOnly" : "read_only");
 
-        if (readOnlyExpression != null && readOnlyExpression instanceof PyReferenceExpression) {
+        if (readOnlyExpression instanceof PyReferenceExpression) {
             result = "True".equals(readOnlyExpression.getName());
         }
         return result;
